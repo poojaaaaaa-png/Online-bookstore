@@ -1,0 +1,31 @@
+name: Java CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  JAVA_VERSION: 8
+  MAVEN_OPTS: -Xmx1024m
+  ARTIFACT_NAME: onlinebookstore
+  WAR_FILE: ${{ env.ARTIFACT_NAME }}.war
+
+jobs:
+  build:
+    name: Build and Package
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build WAR artifact
+        run: |
+          mvn -B clean package -DskipTests
+
+      - name: Upload WAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: war-artifact
+          path: target/${{ env.WAR_FILE }}
