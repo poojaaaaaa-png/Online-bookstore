@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: [main, master]
 
-env:
-  JAVA_VERSION: 8
-  MAVEN_OPTS: -Xmx1024m
-  ARTIFACT_NAME: onlinebookstore
-  WAR_FILE: ${{ env.ARTIFACT_NAME }}.war
-
 jobs:
   build:
     name: Build and Package
@@ -28,4 +22,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: war-artifact
-          path: target/${{ env.WAR_FILE }}
+          path: target/onlinebookstore.war
